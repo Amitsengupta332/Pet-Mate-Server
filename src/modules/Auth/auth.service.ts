@@ -22,6 +22,14 @@ const loginUserIntoDB = async (payload: any) => {
     throw new Error("User does not exist");
   }
 
+  const isPasswordMatched = await bcrypt.compare(
+    payload.password,
+    user.password
+  );
+  if (!isPasswordMatched) {
+    throw new Error("Password does not match");
+  }
+
   const userData = {
     id: user.id,
     name: user.name,
