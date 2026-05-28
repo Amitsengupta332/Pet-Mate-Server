@@ -11,7 +11,7 @@ app.use(cors());
 // application routes
 // app.use('/api/v1', router);
 
-app.use('/api/v1', AuthRoutes);
+app.use('/api/v1/auth', AuthRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello from Apollo Gears World!');
