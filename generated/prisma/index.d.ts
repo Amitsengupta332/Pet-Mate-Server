@@ -23,6 +23,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Pet = $Result.DefaultSelection<Prisma.$PetPayload>
+/**
+ * Model SitterProfiles
+ * 
+ */
+export type SitterProfiles = $Result.DefaultSelection<Prisma.$SitterProfilesPayload>
 
 /**
  * Enums
@@ -194,6 +199,16 @@ export class PrismaClient<
     * ```
     */
   get pet(): Prisma.PetDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.sitterProfiles`: Exposes CRUD operations for the **SitterProfiles** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SitterProfiles
+    * const sitterProfiles = await prisma.sitterProfiles.findMany()
+    * ```
+    */
+  get sitterProfiles(): Prisma.SitterProfilesDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -629,7 +644,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Pet: 'Pet'
+    Pet: 'Pet',
+    SitterProfiles: 'SitterProfiles'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -645,7 +661,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "pet"
+      modelProps: "user" | "pet" | "sitterProfiles"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -797,6 +813,80 @@ export namespace Prisma {
           }
         }
       }
+      SitterProfiles: {
+        payload: Prisma.$SitterProfilesPayload<ExtArgs>
+        fields: Prisma.SitterProfilesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SitterProfilesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitterProfilesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SitterProfilesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitterProfilesPayload>
+          }
+          findFirst: {
+            args: Prisma.SitterProfilesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitterProfilesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SitterProfilesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitterProfilesPayload>
+          }
+          findMany: {
+            args: Prisma.SitterProfilesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitterProfilesPayload>[]
+          }
+          create: {
+            args: Prisma.SitterProfilesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitterProfilesPayload>
+          }
+          createMany: {
+            args: Prisma.SitterProfilesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SitterProfilesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitterProfilesPayload>[]
+          }
+          delete: {
+            args: Prisma.SitterProfilesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitterProfilesPayload>
+          }
+          update: {
+            args: Prisma.SitterProfilesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitterProfilesPayload>
+          }
+          deleteMany: {
+            args: Prisma.SitterProfilesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SitterProfilesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SitterProfilesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitterProfilesPayload>[]
+          }
+          upsert: {
+            args: Prisma.SitterProfilesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SitterProfilesPayload>
+          }
+          aggregate: {
+            args: Prisma.SitterProfilesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSitterProfiles>
+          }
+          groupBy: {
+            args: Prisma.SitterProfilesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SitterProfilesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SitterProfilesCountArgs<ExtArgs>
+            result: $Utils.Optional<SitterProfilesCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -907,6 +997,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     pet?: PetOmit
+    sitterProfiles?: SitterProfilesOmit
   }
 
   /* Types for Logging */
@@ -1205,6 +1296,7 @@ export namespace Prisma {
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sitterProfile?: boolean | User$sitterProfileArgs<ExtArgs>
     pets?: boolean | User$petsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -1244,6 +1336,7 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sitterProfile?: boolean | User$sitterProfileArgs<ExtArgs>
     pets?: boolean | User$petsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -1253,6 +1346,7 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
+      sitterProfile: Prisma.$SitterProfilesPayload<ExtArgs> | null
       pets: Prisma.$PetPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -1658,6 +1752,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    sitterProfile<T extends User$sitterProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$sitterProfileArgs<ExtArgs>>): Prisma__SitterProfilesClient<$Result.GetResult<Prisma.$SitterProfilesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     pets<T extends User$petsArgs<ExtArgs> = {}>(args?: Subset<T, User$petsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2086,6 +2181,25 @@ export namespace Prisma {
      * Limit how many Users to delete.
      */
     limit?: number
+  }
+
+  /**
+   * User.sitterProfile
+   */
+  export type User$sitterProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitterProfiles
+     */
+    select?: SitterProfilesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitterProfiles
+     */
+    omit?: SitterProfilesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitterProfilesInclude<ExtArgs> | null
+    where?: SitterProfilesWhereInput
   }
 
   /**
@@ -3234,6 +3348,1129 @@ export namespace Prisma {
 
 
   /**
+   * Model SitterProfiles
+   */
+
+  export type AggregateSitterProfiles = {
+    _count: SitterProfilesCountAggregateOutputType | null
+    _avg: SitterProfilesAvgAggregateOutputType | null
+    _sum: SitterProfilesSumAggregateOutputType | null
+    _min: SitterProfilesMinAggregateOutputType | null
+    _max: SitterProfilesMaxAggregateOutputType | null
+  }
+
+  export type SitterProfilesAvgAggregateOutputType = {
+    hourlyRate: number | null
+  }
+
+  export type SitterProfilesSumAggregateOutputType = {
+    hourlyRate: number | null
+  }
+
+  export type SitterProfilesMinAggregateOutputType = {
+    id: string | null
+    bio: string | null
+    experience: string | null
+    hourlyRate: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    sitterId: string | null
+  }
+
+  export type SitterProfilesMaxAggregateOutputType = {
+    id: string | null
+    bio: string | null
+    experience: string | null
+    hourlyRate: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    sitterId: string | null
+  }
+
+  export type SitterProfilesCountAggregateOutputType = {
+    id: number
+    bio: number
+    experience: number
+    hourlyRate: number
+    createdAt: number
+    updatedAt: number
+    sitterId: number
+    _all: number
+  }
+
+
+  export type SitterProfilesAvgAggregateInputType = {
+    hourlyRate?: true
+  }
+
+  export type SitterProfilesSumAggregateInputType = {
+    hourlyRate?: true
+  }
+
+  export type SitterProfilesMinAggregateInputType = {
+    id?: true
+    bio?: true
+    experience?: true
+    hourlyRate?: true
+    createdAt?: true
+    updatedAt?: true
+    sitterId?: true
+  }
+
+  export type SitterProfilesMaxAggregateInputType = {
+    id?: true
+    bio?: true
+    experience?: true
+    hourlyRate?: true
+    createdAt?: true
+    updatedAt?: true
+    sitterId?: true
+  }
+
+  export type SitterProfilesCountAggregateInputType = {
+    id?: true
+    bio?: true
+    experience?: true
+    hourlyRate?: true
+    createdAt?: true
+    updatedAt?: true
+    sitterId?: true
+    _all?: true
+  }
+
+  export type SitterProfilesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SitterProfiles to aggregate.
+     */
+    where?: SitterProfilesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SitterProfiles to fetch.
+     */
+    orderBy?: SitterProfilesOrderByWithRelationInput | SitterProfilesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SitterProfilesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SitterProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SitterProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SitterProfiles
+    **/
+    _count?: true | SitterProfilesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SitterProfilesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SitterProfilesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SitterProfilesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SitterProfilesMaxAggregateInputType
+  }
+
+  export type GetSitterProfilesAggregateType<T extends SitterProfilesAggregateArgs> = {
+        [P in keyof T & keyof AggregateSitterProfiles]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSitterProfiles[P]>
+      : GetScalarType<T[P], AggregateSitterProfiles[P]>
+  }
+
+
+
+
+  export type SitterProfilesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SitterProfilesWhereInput
+    orderBy?: SitterProfilesOrderByWithAggregationInput | SitterProfilesOrderByWithAggregationInput[]
+    by: SitterProfilesScalarFieldEnum[] | SitterProfilesScalarFieldEnum
+    having?: SitterProfilesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SitterProfilesCountAggregateInputType | true
+    _avg?: SitterProfilesAvgAggregateInputType
+    _sum?: SitterProfilesSumAggregateInputType
+    _min?: SitterProfilesMinAggregateInputType
+    _max?: SitterProfilesMaxAggregateInputType
+  }
+
+  export type SitterProfilesGroupByOutputType = {
+    id: string
+    bio: string
+    experience: string
+    hourlyRate: number
+    createdAt: Date
+    updatedAt: Date
+    sitterId: string
+    _count: SitterProfilesCountAggregateOutputType | null
+    _avg: SitterProfilesAvgAggregateOutputType | null
+    _sum: SitterProfilesSumAggregateOutputType | null
+    _min: SitterProfilesMinAggregateOutputType | null
+    _max: SitterProfilesMaxAggregateOutputType | null
+  }
+
+  type GetSitterProfilesGroupByPayload<T extends SitterProfilesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SitterProfilesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SitterProfilesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SitterProfilesGroupByOutputType[P]>
+            : GetScalarType<T[P], SitterProfilesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SitterProfilesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    bio?: boolean
+    experience?: boolean
+    hourlyRate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sitterId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sitterProfiles"]>
+
+  export type SitterProfilesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    bio?: boolean
+    experience?: boolean
+    hourlyRate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sitterId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sitterProfiles"]>
+
+  export type SitterProfilesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    bio?: boolean
+    experience?: boolean
+    hourlyRate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sitterId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sitterProfiles"]>
+
+  export type SitterProfilesSelectScalar = {
+    id?: boolean
+    bio?: boolean
+    experience?: boolean
+    hourlyRate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sitterId?: boolean
+  }
+
+  export type SitterProfilesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bio" | "experience" | "hourlyRate" | "createdAt" | "updatedAt" | "sitterId", ExtArgs["result"]["sitterProfiles"]>
+  export type SitterProfilesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SitterProfilesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SitterProfilesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $SitterProfilesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SitterProfiles"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      bio: string
+      experience: string
+      hourlyRate: number
+      createdAt: Date
+      updatedAt: Date
+      sitterId: string
+    }, ExtArgs["result"]["sitterProfiles"]>
+    composites: {}
+  }
+
+  type SitterProfilesGetPayload<S extends boolean | null | undefined | SitterProfilesDefaultArgs> = $Result.GetResult<Prisma.$SitterProfilesPayload, S>
+
+  type SitterProfilesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SitterProfilesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SitterProfilesCountAggregateInputType | true
+    }
+
+  export interface SitterProfilesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SitterProfiles'], meta: { name: 'SitterProfiles' } }
+    /**
+     * Find zero or one SitterProfiles that matches the filter.
+     * @param {SitterProfilesFindUniqueArgs} args - Arguments to find a SitterProfiles
+     * @example
+     * // Get one SitterProfiles
+     * const sitterProfiles = await prisma.sitterProfiles.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SitterProfilesFindUniqueArgs>(args: SelectSubset<T, SitterProfilesFindUniqueArgs<ExtArgs>>): Prisma__SitterProfilesClient<$Result.GetResult<Prisma.$SitterProfilesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SitterProfiles that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SitterProfilesFindUniqueOrThrowArgs} args - Arguments to find a SitterProfiles
+     * @example
+     * // Get one SitterProfiles
+     * const sitterProfiles = await prisma.sitterProfiles.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SitterProfilesFindUniqueOrThrowArgs>(args: SelectSubset<T, SitterProfilesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SitterProfilesClient<$Result.GetResult<Prisma.$SitterProfilesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SitterProfiles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitterProfilesFindFirstArgs} args - Arguments to find a SitterProfiles
+     * @example
+     * // Get one SitterProfiles
+     * const sitterProfiles = await prisma.sitterProfiles.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SitterProfilesFindFirstArgs>(args?: SelectSubset<T, SitterProfilesFindFirstArgs<ExtArgs>>): Prisma__SitterProfilesClient<$Result.GetResult<Prisma.$SitterProfilesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SitterProfiles that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitterProfilesFindFirstOrThrowArgs} args - Arguments to find a SitterProfiles
+     * @example
+     * // Get one SitterProfiles
+     * const sitterProfiles = await prisma.sitterProfiles.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SitterProfilesFindFirstOrThrowArgs>(args?: SelectSubset<T, SitterProfilesFindFirstOrThrowArgs<ExtArgs>>): Prisma__SitterProfilesClient<$Result.GetResult<Prisma.$SitterProfilesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SitterProfiles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitterProfilesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SitterProfiles
+     * const sitterProfiles = await prisma.sitterProfiles.findMany()
+     * 
+     * // Get first 10 SitterProfiles
+     * const sitterProfiles = await prisma.sitterProfiles.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sitterProfilesWithIdOnly = await prisma.sitterProfiles.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SitterProfilesFindManyArgs>(args?: SelectSubset<T, SitterProfilesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SitterProfilesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SitterProfiles.
+     * @param {SitterProfilesCreateArgs} args - Arguments to create a SitterProfiles.
+     * @example
+     * // Create one SitterProfiles
+     * const SitterProfiles = await prisma.sitterProfiles.create({
+     *   data: {
+     *     // ... data to create a SitterProfiles
+     *   }
+     * })
+     * 
+     */
+    create<T extends SitterProfilesCreateArgs>(args: SelectSubset<T, SitterProfilesCreateArgs<ExtArgs>>): Prisma__SitterProfilesClient<$Result.GetResult<Prisma.$SitterProfilesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SitterProfiles.
+     * @param {SitterProfilesCreateManyArgs} args - Arguments to create many SitterProfiles.
+     * @example
+     * // Create many SitterProfiles
+     * const sitterProfiles = await prisma.sitterProfiles.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SitterProfilesCreateManyArgs>(args?: SelectSubset<T, SitterProfilesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SitterProfiles and returns the data saved in the database.
+     * @param {SitterProfilesCreateManyAndReturnArgs} args - Arguments to create many SitterProfiles.
+     * @example
+     * // Create many SitterProfiles
+     * const sitterProfiles = await prisma.sitterProfiles.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SitterProfiles and only return the `id`
+     * const sitterProfilesWithIdOnly = await prisma.sitterProfiles.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SitterProfilesCreateManyAndReturnArgs>(args?: SelectSubset<T, SitterProfilesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SitterProfilesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SitterProfiles.
+     * @param {SitterProfilesDeleteArgs} args - Arguments to delete one SitterProfiles.
+     * @example
+     * // Delete one SitterProfiles
+     * const SitterProfiles = await prisma.sitterProfiles.delete({
+     *   where: {
+     *     // ... filter to delete one SitterProfiles
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SitterProfilesDeleteArgs>(args: SelectSubset<T, SitterProfilesDeleteArgs<ExtArgs>>): Prisma__SitterProfilesClient<$Result.GetResult<Prisma.$SitterProfilesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SitterProfiles.
+     * @param {SitterProfilesUpdateArgs} args - Arguments to update one SitterProfiles.
+     * @example
+     * // Update one SitterProfiles
+     * const sitterProfiles = await prisma.sitterProfiles.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SitterProfilesUpdateArgs>(args: SelectSubset<T, SitterProfilesUpdateArgs<ExtArgs>>): Prisma__SitterProfilesClient<$Result.GetResult<Prisma.$SitterProfilesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SitterProfiles.
+     * @param {SitterProfilesDeleteManyArgs} args - Arguments to filter SitterProfiles to delete.
+     * @example
+     * // Delete a few SitterProfiles
+     * const { count } = await prisma.sitterProfiles.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SitterProfilesDeleteManyArgs>(args?: SelectSubset<T, SitterProfilesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SitterProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitterProfilesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SitterProfiles
+     * const sitterProfiles = await prisma.sitterProfiles.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SitterProfilesUpdateManyArgs>(args: SelectSubset<T, SitterProfilesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SitterProfiles and returns the data updated in the database.
+     * @param {SitterProfilesUpdateManyAndReturnArgs} args - Arguments to update many SitterProfiles.
+     * @example
+     * // Update many SitterProfiles
+     * const sitterProfiles = await prisma.sitterProfiles.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SitterProfiles and only return the `id`
+     * const sitterProfilesWithIdOnly = await prisma.sitterProfiles.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SitterProfilesUpdateManyAndReturnArgs>(args: SelectSubset<T, SitterProfilesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SitterProfilesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SitterProfiles.
+     * @param {SitterProfilesUpsertArgs} args - Arguments to update or create a SitterProfiles.
+     * @example
+     * // Update or create a SitterProfiles
+     * const sitterProfiles = await prisma.sitterProfiles.upsert({
+     *   create: {
+     *     // ... data to create a SitterProfiles
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SitterProfiles we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SitterProfilesUpsertArgs>(args: SelectSubset<T, SitterProfilesUpsertArgs<ExtArgs>>): Prisma__SitterProfilesClient<$Result.GetResult<Prisma.$SitterProfilesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SitterProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitterProfilesCountArgs} args - Arguments to filter SitterProfiles to count.
+     * @example
+     * // Count the number of SitterProfiles
+     * const count = await prisma.sitterProfiles.count({
+     *   where: {
+     *     // ... the filter for the SitterProfiles we want to count
+     *   }
+     * })
+    **/
+    count<T extends SitterProfilesCountArgs>(
+      args?: Subset<T, SitterProfilesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SitterProfilesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SitterProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitterProfilesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SitterProfilesAggregateArgs>(args: Subset<T, SitterProfilesAggregateArgs>): Prisma.PrismaPromise<GetSitterProfilesAggregateType<T>>
+
+    /**
+     * Group by SitterProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SitterProfilesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SitterProfilesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SitterProfilesGroupByArgs['orderBy'] }
+        : { orderBy?: SitterProfilesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SitterProfilesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSitterProfilesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SitterProfiles model
+   */
+  readonly fields: SitterProfilesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SitterProfiles.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SitterProfilesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SitterProfiles model
+   */
+  interface SitterProfilesFieldRefs {
+    readonly id: FieldRef<"SitterProfiles", 'String'>
+    readonly bio: FieldRef<"SitterProfiles", 'String'>
+    readonly experience: FieldRef<"SitterProfiles", 'String'>
+    readonly hourlyRate: FieldRef<"SitterProfiles", 'Int'>
+    readonly createdAt: FieldRef<"SitterProfiles", 'DateTime'>
+    readonly updatedAt: FieldRef<"SitterProfiles", 'DateTime'>
+    readonly sitterId: FieldRef<"SitterProfiles", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SitterProfiles findUnique
+   */
+  export type SitterProfilesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitterProfiles
+     */
+    select?: SitterProfilesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitterProfiles
+     */
+    omit?: SitterProfilesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitterProfilesInclude<ExtArgs> | null
+    /**
+     * Filter, which SitterProfiles to fetch.
+     */
+    where: SitterProfilesWhereUniqueInput
+  }
+
+  /**
+   * SitterProfiles findUniqueOrThrow
+   */
+  export type SitterProfilesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitterProfiles
+     */
+    select?: SitterProfilesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitterProfiles
+     */
+    omit?: SitterProfilesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitterProfilesInclude<ExtArgs> | null
+    /**
+     * Filter, which SitterProfiles to fetch.
+     */
+    where: SitterProfilesWhereUniqueInput
+  }
+
+  /**
+   * SitterProfiles findFirst
+   */
+  export type SitterProfilesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitterProfiles
+     */
+    select?: SitterProfilesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitterProfiles
+     */
+    omit?: SitterProfilesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitterProfilesInclude<ExtArgs> | null
+    /**
+     * Filter, which SitterProfiles to fetch.
+     */
+    where?: SitterProfilesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SitterProfiles to fetch.
+     */
+    orderBy?: SitterProfilesOrderByWithRelationInput | SitterProfilesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SitterProfiles.
+     */
+    cursor?: SitterProfilesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SitterProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SitterProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SitterProfiles.
+     */
+    distinct?: SitterProfilesScalarFieldEnum | SitterProfilesScalarFieldEnum[]
+  }
+
+  /**
+   * SitterProfiles findFirstOrThrow
+   */
+  export type SitterProfilesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitterProfiles
+     */
+    select?: SitterProfilesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitterProfiles
+     */
+    omit?: SitterProfilesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitterProfilesInclude<ExtArgs> | null
+    /**
+     * Filter, which SitterProfiles to fetch.
+     */
+    where?: SitterProfilesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SitterProfiles to fetch.
+     */
+    orderBy?: SitterProfilesOrderByWithRelationInput | SitterProfilesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SitterProfiles.
+     */
+    cursor?: SitterProfilesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SitterProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SitterProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SitterProfiles.
+     */
+    distinct?: SitterProfilesScalarFieldEnum | SitterProfilesScalarFieldEnum[]
+  }
+
+  /**
+   * SitterProfiles findMany
+   */
+  export type SitterProfilesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitterProfiles
+     */
+    select?: SitterProfilesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitterProfiles
+     */
+    omit?: SitterProfilesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitterProfilesInclude<ExtArgs> | null
+    /**
+     * Filter, which SitterProfiles to fetch.
+     */
+    where?: SitterProfilesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SitterProfiles to fetch.
+     */
+    orderBy?: SitterProfilesOrderByWithRelationInput | SitterProfilesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SitterProfiles.
+     */
+    cursor?: SitterProfilesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SitterProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SitterProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SitterProfiles.
+     */
+    distinct?: SitterProfilesScalarFieldEnum | SitterProfilesScalarFieldEnum[]
+  }
+
+  /**
+   * SitterProfiles create
+   */
+  export type SitterProfilesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitterProfiles
+     */
+    select?: SitterProfilesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitterProfiles
+     */
+    omit?: SitterProfilesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitterProfilesInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SitterProfiles.
+     */
+    data: XOR<SitterProfilesCreateInput, SitterProfilesUncheckedCreateInput>
+  }
+
+  /**
+   * SitterProfiles createMany
+   */
+  export type SitterProfilesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SitterProfiles.
+     */
+    data: SitterProfilesCreateManyInput | SitterProfilesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SitterProfiles createManyAndReturn
+   */
+  export type SitterProfilesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitterProfiles
+     */
+    select?: SitterProfilesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitterProfiles
+     */
+    omit?: SitterProfilesOmit<ExtArgs> | null
+    /**
+     * The data used to create many SitterProfiles.
+     */
+    data: SitterProfilesCreateManyInput | SitterProfilesCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitterProfilesIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SitterProfiles update
+   */
+  export type SitterProfilesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitterProfiles
+     */
+    select?: SitterProfilesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitterProfiles
+     */
+    omit?: SitterProfilesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitterProfilesInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SitterProfiles.
+     */
+    data: XOR<SitterProfilesUpdateInput, SitterProfilesUncheckedUpdateInput>
+    /**
+     * Choose, which SitterProfiles to update.
+     */
+    where: SitterProfilesWhereUniqueInput
+  }
+
+  /**
+   * SitterProfiles updateMany
+   */
+  export type SitterProfilesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SitterProfiles.
+     */
+    data: XOR<SitterProfilesUpdateManyMutationInput, SitterProfilesUncheckedUpdateManyInput>
+    /**
+     * Filter which SitterProfiles to update
+     */
+    where?: SitterProfilesWhereInput
+    /**
+     * Limit how many SitterProfiles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SitterProfiles updateManyAndReturn
+   */
+  export type SitterProfilesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitterProfiles
+     */
+    select?: SitterProfilesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitterProfiles
+     */
+    omit?: SitterProfilesOmit<ExtArgs> | null
+    /**
+     * The data used to update SitterProfiles.
+     */
+    data: XOR<SitterProfilesUpdateManyMutationInput, SitterProfilesUncheckedUpdateManyInput>
+    /**
+     * Filter which SitterProfiles to update
+     */
+    where?: SitterProfilesWhereInput
+    /**
+     * Limit how many SitterProfiles to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitterProfilesIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SitterProfiles upsert
+   */
+  export type SitterProfilesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitterProfiles
+     */
+    select?: SitterProfilesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitterProfiles
+     */
+    omit?: SitterProfilesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitterProfilesInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SitterProfiles to update in case it exists.
+     */
+    where: SitterProfilesWhereUniqueInput
+    /**
+     * In case the SitterProfiles found by the `where` argument doesn't exist, create a new SitterProfiles with this data.
+     */
+    create: XOR<SitterProfilesCreateInput, SitterProfilesUncheckedCreateInput>
+    /**
+     * In case the SitterProfiles was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SitterProfilesUpdateInput, SitterProfilesUncheckedUpdateInput>
+  }
+
+  /**
+   * SitterProfiles delete
+   */
+  export type SitterProfilesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitterProfiles
+     */
+    select?: SitterProfilesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitterProfiles
+     */
+    omit?: SitterProfilesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitterProfilesInclude<ExtArgs> | null
+    /**
+     * Filter which SitterProfiles to delete.
+     */
+    where: SitterProfilesWhereUniqueInput
+  }
+
+  /**
+   * SitterProfiles deleteMany
+   */
+  export type SitterProfilesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SitterProfiles to delete
+     */
+    where?: SitterProfilesWhereInput
+    /**
+     * Limit how many SitterProfiles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SitterProfiles without action
+   */
+  export type SitterProfilesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SitterProfiles
+     */
+    select?: SitterProfilesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SitterProfiles
+     */
+    omit?: SitterProfilesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SitterProfilesInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -3273,6 +4510,19 @@ export namespace Prisma {
   };
 
   export type PetScalarFieldEnum = (typeof PetScalarFieldEnum)[keyof typeof PetScalarFieldEnum]
+
+
+  export const SitterProfilesScalarFieldEnum: {
+    id: 'id',
+    bio: 'bio',
+    experience: 'experience',
+    hourlyRate: 'hourlyRate',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    sitterId: 'sitterId'
+  };
+
+  export type SitterProfilesScalarFieldEnum = (typeof SitterProfilesScalarFieldEnum)[keyof typeof SitterProfilesScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3364,6 +4614,20 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
   /**
    * Deep Input Types
    */
@@ -3381,6 +4645,7 @@ export namespace Prisma {
     status?: EnumStatusFilter<"User"> | $Enums.Status
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    sitterProfile?: XOR<SitterProfilesNullableScalarRelationFilter, SitterProfilesWhereInput> | null
     pets?: PetListRelationFilter
   }
 
@@ -3393,6 +4658,7 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sitterProfile?: SitterProfilesOrderByWithRelationInput
     pets?: PetOrderByRelationAggregateInput
   }
 
@@ -3408,6 +4674,7 @@ export namespace Prisma {
     status?: EnumStatusFilter<"User"> | $Enums.Status
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    sitterProfile?: XOR<SitterProfilesNullableScalarRelationFilter, SitterProfilesWhereInput> | null
     pets?: PetListRelationFilter
   }, "id" | "email">
 
@@ -3509,6 +4776,73 @@ export namespace Prisma {
     ownerId?: StringWithAggregatesFilter<"Pet"> | string
   }
 
+  export type SitterProfilesWhereInput = {
+    AND?: SitterProfilesWhereInput | SitterProfilesWhereInput[]
+    OR?: SitterProfilesWhereInput[]
+    NOT?: SitterProfilesWhereInput | SitterProfilesWhereInput[]
+    id?: StringFilter<"SitterProfiles"> | string
+    bio?: StringFilter<"SitterProfiles"> | string
+    experience?: StringFilter<"SitterProfiles"> | string
+    hourlyRate?: IntFilter<"SitterProfiles"> | number
+    createdAt?: DateTimeFilter<"SitterProfiles"> | Date | string
+    updatedAt?: DateTimeFilter<"SitterProfiles"> | Date | string
+    sitterId?: StringFilter<"SitterProfiles"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type SitterProfilesOrderByWithRelationInput = {
+    id?: SortOrder
+    bio?: SortOrder
+    experience?: SortOrder
+    hourlyRate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sitterId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type SitterProfilesWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    sitterId?: string
+    AND?: SitterProfilesWhereInput | SitterProfilesWhereInput[]
+    OR?: SitterProfilesWhereInput[]
+    NOT?: SitterProfilesWhereInput | SitterProfilesWhereInput[]
+    bio?: StringFilter<"SitterProfiles"> | string
+    experience?: StringFilter<"SitterProfiles"> | string
+    hourlyRate?: IntFilter<"SitterProfiles"> | number
+    createdAt?: DateTimeFilter<"SitterProfiles"> | Date | string
+    updatedAt?: DateTimeFilter<"SitterProfiles"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "sitterId">
+
+  export type SitterProfilesOrderByWithAggregationInput = {
+    id?: SortOrder
+    bio?: SortOrder
+    experience?: SortOrder
+    hourlyRate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sitterId?: SortOrder
+    _count?: SitterProfilesCountOrderByAggregateInput
+    _avg?: SitterProfilesAvgOrderByAggregateInput
+    _max?: SitterProfilesMaxOrderByAggregateInput
+    _min?: SitterProfilesMinOrderByAggregateInput
+    _sum?: SitterProfilesSumOrderByAggregateInput
+  }
+
+  export type SitterProfilesScalarWhereWithAggregatesInput = {
+    AND?: SitterProfilesScalarWhereWithAggregatesInput | SitterProfilesScalarWhereWithAggregatesInput[]
+    OR?: SitterProfilesScalarWhereWithAggregatesInput[]
+    NOT?: SitterProfilesScalarWhereWithAggregatesInput | SitterProfilesScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SitterProfiles"> | string
+    bio?: StringWithAggregatesFilter<"SitterProfiles"> | string
+    experience?: StringWithAggregatesFilter<"SitterProfiles"> | string
+    hourlyRate?: IntWithAggregatesFilter<"SitterProfiles"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"SitterProfiles"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SitterProfiles"> | Date | string
+    sitterId?: StringWithAggregatesFilter<"SitterProfiles"> | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name: string
@@ -3518,6 +4852,7 @@ export namespace Prisma {
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    sitterProfile?: SitterProfilesCreateNestedOneWithoutUserInput
     pets?: PetCreateNestedManyWithoutOwnerInput
   }
 
@@ -3530,6 +4865,7 @@ export namespace Prisma {
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    sitterProfile?: SitterProfilesUncheckedCreateNestedOneWithoutUserInput
     pets?: PetUncheckedCreateNestedManyWithoutOwnerInput
   }
 
@@ -3542,6 +4878,7 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sitterProfile?: SitterProfilesUpdateOneWithoutUserNestedInput
     pets?: PetUpdateManyWithoutOwnerNestedInput
   }
 
@@ -3554,6 +4891,7 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sitterProfile?: SitterProfilesUncheckedUpdateOneWithoutUserNestedInput
     pets?: PetUncheckedUpdateManyWithoutOwnerNestedInput
   }
 
@@ -3666,6 +5004,75 @@ export namespace Prisma {
     ownerId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type SitterProfilesCreateInput = {
+    id?: string
+    bio: string
+    experience: string
+    hourlyRate: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutSitterProfileInput
+  }
+
+  export type SitterProfilesUncheckedCreateInput = {
+    id?: string
+    bio: string
+    experience: string
+    hourlyRate: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sitterId: string
+  }
+
+  export type SitterProfilesUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    hourlyRate?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSitterProfileNestedInput
+  }
+
+  export type SitterProfilesUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    hourlyRate?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sitterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SitterProfilesCreateManyInput = {
+    id?: string
+    bio: string
+    experience: string
+    hourlyRate: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sitterId: string
+  }
+
+  export type SitterProfilesUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    hourlyRate?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SitterProfilesUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    hourlyRate?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sitterId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -3704,6 +5111,11 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type SitterProfilesNullableScalarRelationFilter = {
+    is?: SitterProfilesWhereInput | null
+    isNot?: SitterProfilesWhereInput | null
   }
 
   export type PetListRelationFilter = {
@@ -3839,11 +5251,88 @@ export namespace Prisma {
     ownerId?: SortOrder
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type SitterProfilesCountOrderByAggregateInput = {
+    id?: SortOrder
+    bio?: SortOrder
+    experience?: SortOrder
+    hourlyRate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sitterId?: SortOrder
+  }
+
+  export type SitterProfilesAvgOrderByAggregateInput = {
+    hourlyRate?: SortOrder
+  }
+
+  export type SitterProfilesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    bio?: SortOrder
+    experience?: SortOrder
+    hourlyRate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sitterId?: SortOrder
+  }
+
+  export type SitterProfilesMinOrderByAggregateInput = {
+    id?: SortOrder
+    bio?: SortOrder
+    experience?: SortOrder
+    hourlyRate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sitterId?: SortOrder
+  }
+
+  export type SitterProfilesSumOrderByAggregateInput = {
+    hourlyRate?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type SitterProfilesCreateNestedOneWithoutUserInput = {
+    create?: XOR<SitterProfilesCreateWithoutUserInput, SitterProfilesUncheckedCreateWithoutUserInput>
+    connectOrCreate?: SitterProfilesCreateOrConnectWithoutUserInput
+    connect?: SitterProfilesWhereUniqueInput
+  }
+
   export type PetCreateNestedManyWithoutOwnerInput = {
     create?: XOR<PetCreateWithoutOwnerInput, PetUncheckedCreateWithoutOwnerInput> | PetCreateWithoutOwnerInput[] | PetUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: PetCreateOrConnectWithoutOwnerInput | PetCreateOrConnectWithoutOwnerInput[]
     createMany?: PetCreateManyOwnerInputEnvelope
     connect?: PetWhereUniqueInput | PetWhereUniqueInput[]
+  }
+
+  export type SitterProfilesUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<SitterProfilesCreateWithoutUserInput, SitterProfilesUncheckedCreateWithoutUserInput>
+    connectOrCreate?: SitterProfilesCreateOrConnectWithoutUserInput
+    connect?: SitterProfilesWhereUniqueInput
   }
 
   export type PetUncheckedCreateNestedManyWithoutOwnerInput = {
@@ -3869,6 +5358,16 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type SitterProfilesUpdateOneWithoutUserNestedInput = {
+    create?: XOR<SitterProfilesCreateWithoutUserInput, SitterProfilesUncheckedCreateWithoutUserInput>
+    connectOrCreate?: SitterProfilesCreateOrConnectWithoutUserInput
+    upsert?: SitterProfilesUpsertWithoutUserInput
+    disconnect?: SitterProfilesWhereInput | boolean
+    delete?: SitterProfilesWhereInput | boolean
+    connect?: SitterProfilesWhereUniqueInput
+    update?: XOR<XOR<SitterProfilesUpdateToOneWithWhereWithoutUserInput, SitterProfilesUpdateWithoutUserInput>, SitterProfilesUncheckedUpdateWithoutUserInput>
+  }
+
   export type PetUpdateManyWithoutOwnerNestedInput = {
     create?: XOR<PetCreateWithoutOwnerInput, PetUncheckedCreateWithoutOwnerInput> | PetCreateWithoutOwnerInput[] | PetUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: PetCreateOrConnectWithoutOwnerInput | PetCreateOrConnectWithoutOwnerInput[]
@@ -3881,6 +5380,16 @@ export namespace Prisma {
     update?: PetUpdateWithWhereUniqueWithoutOwnerInput | PetUpdateWithWhereUniqueWithoutOwnerInput[]
     updateMany?: PetUpdateManyWithWhereWithoutOwnerInput | PetUpdateManyWithWhereWithoutOwnerInput[]
     deleteMany?: PetScalarWhereInput | PetScalarWhereInput[]
+  }
+
+  export type SitterProfilesUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<SitterProfilesCreateWithoutUserInput, SitterProfilesUncheckedCreateWithoutUserInput>
+    connectOrCreate?: SitterProfilesCreateOrConnectWithoutUserInput
+    upsert?: SitterProfilesUpsertWithoutUserInput
+    disconnect?: SitterProfilesWhereInput | boolean
+    delete?: SitterProfilesWhereInput | boolean
+    connect?: SitterProfilesWhereUniqueInput
+    update?: XOR<XOR<SitterProfilesUpdateToOneWithWhereWithoutUserInput, SitterProfilesUpdateWithoutUserInput>, SitterProfilesUncheckedUpdateWithoutUserInput>
   }
 
   export type PetUncheckedUpdateManyWithoutOwnerNestedInput = {
@@ -3909,6 +5418,28 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutPetsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPetsInput, UserUpdateWithoutPetsInput>, UserUncheckedUpdateWithoutPetsInput>
+  }
+
+  export type UserCreateNestedOneWithoutSitterProfileInput = {
+    create?: XOR<UserCreateWithoutSitterProfileInput, UserUncheckedCreateWithoutSitterProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSitterProfileInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutSitterProfileNestedInput = {
+    create?: XOR<UserCreateWithoutSitterProfileInput, UserUncheckedCreateWithoutSitterProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSitterProfileInput
+    upsert?: UserUpsertWithoutSitterProfileInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSitterProfileInput, UserUpdateWithoutSitterProfileInput>, UserUncheckedUpdateWithoutSitterProfileInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -4012,6 +5543,56 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type SitterProfilesCreateWithoutUserInput = {
+    id?: string
+    bio: string
+    experience: string
+    hourlyRate: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SitterProfilesUncheckedCreateWithoutUserInput = {
+    id?: string
+    bio: string
+    experience: string
+    hourlyRate: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SitterProfilesCreateOrConnectWithoutUserInput = {
+    where: SitterProfilesWhereUniqueInput
+    create: XOR<SitterProfilesCreateWithoutUserInput, SitterProfilesUncheckedCreateWithoutUserInput>
+  }
+
   export type PetCreateWithoutOwnerInput = {
     id?: string
     name: string
@@ -4040,6 +5621,35 @@ export namespace Prisma {
   export type PetCreateManyOwnerInputEnvelope = {
     data: PetCreateManyOwnerInput | PetCreateManyOwnerInput[]
     skipDuplicates?: boolean
+  }
+
+  export type SitterProfilesUpsertWithoutUserInput = {
+    update: XOR<SitterProfilesUpdateWithoutUserInput, SitterProfilesUncheckedUpdateWithoutUserInput>
+    create: XOR<SitterProfilesCreateWithoutUserInput, SitterProfilesUncheckedCreateWithoutUserInput>
+    where?: SitterProfilesWhereInput
+  }
+
+  export type SitterProfilesUpdateToOneWithWhereWithoutUserInput = {
+    where?: SitterProfilesWhereInput
+    data: XOR<SitterProfilesUpdateWithoutUserInput, SitterProfilesUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SitterProfilesUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    hourlyRate?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SitterProfilesUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    hourlyRate?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PetUpsertWithWhereUniqueWithoutOwnerInput = {
@@ -4081,6 +5691,7 @@ export namespace Prisma {
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    sitterProfile?: SitterProfilesCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPetsInput = {
@@ -4092,6 +5703,7 @@ export namespace Prisma {
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    sitterProfile?: SitterProfilesUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPetsInput = {
@@ -4119,6 +5731,7 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sitterProfile?: SitterProfilesUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPetsInput = {
@@ -4130,6 +5743,71 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sitterProfile?: SitterProfilesUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutSitterProfileInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role: $Enums.Role
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    pets?: PetCreateNestedManyWithoutOwnerInput
+  }
+
+  export type UserUncheckedCreateWithoutSitterProfileInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role: $Enums.Role
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    pets?: PetUncheckedCreateNestedManyWithoutOwnerInput
+  }
+
+  export type UserCreateOrConnectWithoutSitterProfileInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSitterProfileInput, UserUncheckedCreateWithoutSitterProfileInput>
+  }
+
+  export type UserUpsertWithoutSitterProfileInput = {
+    update: XOR<UserUpdateWithoutSitterProfileInput, UserUncheckedUpdateWithoutSitterProfileInput>
+    create: XOR<UserCreateWithoutSitterProfileInput, UserUncheckedCreateWithoutSitterProfileInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSitterProfileInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSitterProfileInput, UserUncheckedUpdateWithoutSitterProfileInput>
+  }
+
+  export type UserUpdateWithoutSitterProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pets?: PetUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSitterProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pets?: PetUncheckedUpdateManyWithoutOwnerNestedInput
   }
 
   export type PetCreateManyOwnerInput = {

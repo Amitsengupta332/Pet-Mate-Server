@@ -29,7 +29,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  pets Pet[]
+  sitterProfile SitterProfiles?
+  pets          Pet[]
 
   @@index([status])
   @@map("users")
@@ -46,4 +47,18 @@ model Pet {
 
   ownerId String
   owner   User   @relation(fields: [ownerId], references: [id])
+}
+
+model SitterProfiles {
+  id         String   @id @default(uuid())
+  bio        String
+  experience String
+  hourlyRate Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  sitterId String @unique
+  user     User   @relation(fields: [sitterId], references: [id])
+
+  @@map("sitterProfile")
 }

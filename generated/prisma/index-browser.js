@@ -142,6 +142,16 @@ exports.Prisma.PetScalarFieldEnum = {
   ownerId: 'ownerId'
 };
 
+exports.Prisma.SitterProfilesScalarFieldEnum = {
+  id: 'id',
+  bio: 'bio',
+  experience: 'experience',
+  hourlyRate: 'hourlyRate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  sitterId: 'sitterId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -164,7 +174,8 @@ exports.Status = exports.$Enums.Status = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Pet: 'Pet'
+  Pet: 'Pet',
+  SitterProfiles: 'SitterProfiles'
 };
 
 /**

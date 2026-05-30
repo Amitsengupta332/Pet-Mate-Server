@@ -6,10 +6,9 @@ generator client {
 
 datasource db {
   provider = "postgresql"
- 
 }
 
-enum Role{
+enum Role {
   OWNER
   SITTER
   ADMIN
@@ -21,30 +20,45 @@ enum Status {
 }
 
 model User {
-    id        String   @id @default(uuid())
-    name      String
-    email     String   @unique
-    password  String
-    role      Role
-    status    Status @default(ACTIVE)
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role
+  status    Status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    pets Pet[]
+  sitterProfile SitterProfiles?
+  pets          Pet[]
 
-    @@index([status])
-    @@map("users")
+  @@index([status])
+  @@map("users")
 }
 
 model Pet {
-  id String @id @default(uuid())
-  name String
-  breed String
-  age String
-  notes String
+  id        String   @id @default(uuid())
+  name      String
+  breed     String
+  age       String
+  notes     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-   
+
   ownerId String
-  owner User @relation(fields: [ownerId], references: [id])
+  owner   User   @relation(fields: [ownerId], references: [id])
+}
+
+model SitterProfiles {
+  id         String   @id @default(uuid())
+  bio        String
+  experience String
+  hourlyRate Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  sitterId String @unique
+  user     User   @relation(fields: [sitterId], references: [id])
+
+  @@map("sitterProfile")
 }
