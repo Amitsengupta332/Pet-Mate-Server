@@ -152,6 +152,16 @@ exports.Prisma.SitterProfilesScalarFieldEnum = {
   sitterId: 'sitterId'
 };
 
+exports.Prisma.ServiceScalarFieldEnum = {
+  id: 'id',
+  serviceType: 'serviceType',
+  price: 'price',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  sitterId: 'sitterId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -160,6 +170,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 exports.Role = exports.$Enums.Role = {
   OWNER: 'OWNER',
@@ -172,10 +187,18 @@ exports.Status = exports.$Enums.Status = {
   SUSPENDED: 'SUSPENDED'
 };
 
+exports.ServiceType = exports.$Enums.ServiceType = {
+  WALKING: 'WALKING',
+  BOARDING: 'BOARDING',
+  DAYCARE: 'DAYCARE',
+  SITTING: 'SITTING'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Pet: 'Pet',
-  SitterProfiles: 'SitterProfiles'
+  SitterProfiles: 'SitterProfiles',
+  Service: 'Service'
 };
 
 /**
