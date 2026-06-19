@@ -12,7 +12,7 @@ const createServiceIntoDB = async (payload: any, userId: string) => {
   }
 
   const result = await prisma.service.create({
-    data: { ...payload, sitterProfileId: sitterProfile.id },
+    data: { ...payload, sitterId: sitterProfile.id },
   });
 
   return result;
@@ -26,7 +26,7 @@ const getAllServiceIntoDB = async (userId: string) => {
   });
 
   if (!sitterProfile) {
-    throw new Error("Sitter profile not found");
+    throw new Error("Sitter Profile not found");
   }
 
   const result = await prisma.service.findMany({

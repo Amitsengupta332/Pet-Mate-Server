@@ -25,6 +25,14 @@ enum ServiceType {
   DAYCARE
   SITTING
 }
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
 model User {
   id        String   @id @default(uuid())
   name      String
@@ -37,6 +45,8 @@ model User {
 
   sitterProfile SitterProfiles?
   pets          Pet[]
+
+  booking Booking[]
 
   @@index([status])
   @@map("users")
@@ -53,6 +63,8 @@ model Pet {
 
   ownerId String
   owner   User   @relation(fields: [ownerId], references: [id])
+
+  booking Booking[]
 }
 
 model SitterProfiles {
@@ -67,18 +79,45 @@ model SitterProfiles {
   user     User   @relation(fields: [sitterId], references: [id])
 
   services Service[]
+
   @@map("sitterProfile")
 }
 
 model Service {
-  id String @id @default(uuid())
+  id          String      @id @default(uuid())
   serviceType ServiceType
-  price Float
+  price       Float
   description String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  sitterId String
+  sitter   SitterProfiles @relation(fields: [sitterId], references: [id])
+
+  booking Booking[]
+
+  @@map("services")
+}
+
+model Booking {
+  id         String        @id @default(uuid())
+  ownerId    String
+  sitterId   String
+  petId      String
+  serviceId  String
+  startDate  DateTime
+  endDate    DateTime
+  totalPrice Float
+  status     BookingStatus @default(PENDING)
+  notes      String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  sitterId String
-  sitter SitterProfiles @relation(fields: [sitterId], references: [id])
-  @@map("services")
+  owner User @relation(fields: [ownerId], references: [id])
+  pet   Pet  @relation(fields: [petId], references: [id])
+
+  service Service @relation(fields: [serviceId], references: [id])
+
+  @@map("bookings")
 }

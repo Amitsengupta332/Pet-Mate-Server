@@ -162,6 +162,21 @@ exports.Prisma.ServiceScalarFieldEnum = {
   sitterId: 'sitterId'
 };
 
+exports.Prisma.BookingScalarFieldEnum = {
+  id: 'id',
+  ownerId: 'ownerId',
+  sitterId: 'sitterId',
+  petId: 'petId',
+  serviceId: 'serviceId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  totalPrice: 'totalPrice',
+  status: 'status',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -194,11 +209,19 @@ exports.ServiceType = exports.$Enums.ServiceType = {
   SITTING: 'SITTING'
 };
 
+exports.BookingStatus = exports.$Enums.BookingStatus = {
+  PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
+  CANCELLED: 'CANCELLED',
+  COMPLETED: 'COMPLETED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Pet: 'Pet',
   SitterProfiles: 'SitterProfiles',
-  Service: 'Service'
+  Service: 'Service',
+  Booking: 'Booking'
 };
 
 /**
