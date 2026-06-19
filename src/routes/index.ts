@@ -3,6 +3,7 @@ import { AuthRoutes } from "../modules/Auth/auth.route";
 import { PetRoutes } from "../modules/Pet/pet.route";
 import { SitterRoutes } from "../modules/Sitter/sitter.route";
 import { ServiceRoutes } from "../modules/Service/service.route";
+import { BookingRoutes } from "../modules/Booking/booking.route";
 
 const router = Router();
 
@@ -25,6 +26,10 @@ const routerManager = [
     {
         path: "/service",
         router: ServiceRoutes,
+    },
+    {
+        path: "/booking",
+        router: BookingRoutes,
     },
 ]
 
