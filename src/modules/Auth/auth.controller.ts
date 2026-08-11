@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AuthService } from "./auth.service";
 import sendResponse from "../../utils/sendResponse";
 
-const createUser = async (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await AuthService.createUserIntoDB(req.body);
     sendResponse(res, {
@@ -12,12 +12,7 @@ const createUser = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error: any) {
-    sendResponse(res, {
-      statusCode: 500,
-      success: false,
-      message: error?.message || "Something went wrong",
-      data: null,
-    });
+    next(error);
   }
 };
 const loginUser = async (req: Request, res: Response) => {

@@ -3,6 +3,8 @@ import cors from 'cors';
 import { AuthRoutes } from './modules/Auth/auth.route';
 import { PetRoutes } from './modules/Pet/pet.route';
 import router from './routes';
+import { errorHandler } from './middlewares/globalErrorHandler';
+import { notFound } from './middlewares/notFound';
 
 const app: Application = express();
 
@@ -19,5 +21,10 @@ app.use('/api/v1', router);
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello from Apollo Gears World!');
 });
+
+
+app.use(errorHandler);
+app.use(notFound);
+
 
 export default app;

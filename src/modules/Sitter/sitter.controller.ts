@@ -47,7 +47,8 @@ const getAllSitter = async (req: Request, res: Response) => {
 const getSingleSitter = async (req: Request, res: Response) => {
   try {
     const result = await SitterService.getSingleSitterIntoDB(
-      req.params?.id as string,);
+      req.params?.id as string,
+    );
 
     sendResponse(res, {
       statusCode: 201,
@@ -65,9 +66,33 @@ const getSingleSitter = async (req: Request, res: Response) => {
   }
 };
 
+const updateBookingStatus = async (req: Request, res: Response) => {
+  try {
+    const result = await SitterService.updateBookingStatusIntoDB(
+      req.body.status,
+      req.params?.id as string,
+    );
+
+    sendResponse(res, {
+      statusCode: 201,
+      success: true,
+      message: "Booking Status updated Successfully.",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 201,
+      success: true,
+      message: error?.message || "Something went wrong!!",
+      data: null,
+    });
+  }
+};
+
 export const SitterController = {
   // Add controller methods here
   createSitter,
   getAllSitter,
-  getSingleSitter
+  getSingleSitter,
+  updateBookingStatus,
 };
