@@ -49,17 +49,30 @@ const createBookingIntoDB = async (
 
   //  Calculation
 
-  const startTime = new Date(payload.startDate).getDate(); // Miliseconds 1
-  const endTime = new Date(payload.endDate).getTime(); // Miliseconds  10
+  // const startTime = new Date(payload.startDate).getDate(); // Miliseconds 1
+  // const endTime = new Date(payload.endDate).getTime(); // Miliseconds  10
+
+  const startTime = new Date(payload.startDate).getTime();
+  const endTime = new Date(payload.endDate).getTime();
+
+  // if (endTime <= startTime) {
+  //   throw new Error("End date must be greater than start date");
+  // }
+
+  // const duration = endTime - startTime;
+  // console.log(duration);
+
+  // const durationInHour = duration / (1000 * 60 * 60); // Convert milliseconds to hours
+
+  // const totalPrice = durationInHour * service.price;
 
   if (endTime <= startTime) {
     throw new Error("End date must be greater than start date");
   }
 
   const duration = endTime - startTime;
-  console.log(duration);
 
-  const durationInHour = duration / (1000 * 60 * 60); // Convert milliseconds to hours
+  const durationInHour = duration / (1000 * 60 * 60);
 
   const totalPrice = durationInHour * service.price;
   const result = await prisma.booking.create({

@@ -1,7 +1,6 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import { AuthRoutes } from './modules/Auth/auth.route';
-import { PetRoutes } from './modules/Pet/pet.route';
+ 
 import router from './routes';
 import { errorHandler } from './middlewares/globalErrorHandler';
 import { notFound } from './middlewares/notFound';
