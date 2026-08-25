@@ -177,6 +177,17 @@ exports.Prisma.BookingScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  rating: 'rating',
+  comment: 'comment',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  ownerId: 'ownerId',
+  sitterId: 'sitterId',
+  bookingId: 'bookingId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -221,7 +232,8 @@ exports.Prisma.ModelName = {
   Pet: 'Pet',
   SitterProfiles: 'SitterProfiles',
   Service: 'Service',
-  Booking: 'Booking'
+  Booking: 'Booking',
+  Review: 'Review'
 };
 
 /**

@@ -25,7 +25,30 @@ const createService = async (req: Request, res: Response) => {
   }
 };
 
+const getUserBookings = async (req: Request, res: Response) => {
+  try {
+    const result = await BookingService.getUserBookingsFromDB(
+      req.user?.id,
+      req.user?.role,
+    );
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Bookings retrieved successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 500,
+      success: false,
+      message: error?.message || "Something went wrong!!",
+      data: null,
+    });
+  }
+};
+
 export const BookingController = {
-  // Add controller methods here
   createService,
+  getUserBookings,
 };

@@ -47,6 +47,7 @@ model User {
   pets          Pet[]
 
   booking Booking[]
+  reviews Review[]
 
   @@index([status])
   @@map("users")
@@ -79,6 +80,7 @@ model SitterProfiles {
   user     User   @relation(fields: [sitterId], references: [id])
 
   services Service[]
+  reviews  Review[]
 
   @@map("sitterProfile")
 }
@@ -118,6 +120,24 @@ model Booking {
   pet   Pet  @relation(fields: [petId], references: [id])
 
   service Service @relation(fields: [serviceId], references: [id])
+  review  Review?
 
   @@map("bookings")
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  rating    Int // 1 to 5
+  comment   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId   String
+  owner     User           @relation(fields: [ownerId], references: [id])
+  sitterId  String
+  sitter    SitterProfiles @relation(fields: [sitterId], references: [id])
+  bookingId String         @unique
+  booking   Booking        @relation(fields: [bookingId], references: [id])
+
+  @@map("reviews")
 }
