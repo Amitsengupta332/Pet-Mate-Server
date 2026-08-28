@@ -17,9 +17,9 @@ const createService = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     sendResponse(res, {
-      statusCode: 201,
-      success: true,
-      message: error?.message || "Something went wrong!!",
+      statusCode: 400,
+      success: false,
+      message: error?.message || "Failed to create service",
       data: null,
     });
   }
@@ -27,47 +27,47 @@ const createService = async (req: Request, res: Response) => {
 
 const getAllService = async (req: Request, res: Response) => {
   try {
-    const result = await ServiceService.getAllServiceIntoDB(req.user?.id);
+    const result = await ServiceService.getAllServiceIntoDB();
     sendResponse(res, {
-      statusCode: 201,
+      statusCode: 200,
       success: true,
-      message: "Sitter retrived Successfully.",
+      message: "Services retrieved successfully",
       data: result,
     });
   } catch (error: any) {
     sendResponse(res, {
-      statusCode: 201,
+      statusCode: 500,
       success: false,
-      message: error?.message || "Something went wrong!!",
+      message: error?.message || "Failed to retrieve services",
       data: null,
     });
   }
 };
 
-const getSingleSitter = async (req: Request, res: Response) => {
+const getSingleService = async (req: Request, res: Response) => {
   try {
     const result = await ServiceService.getSingleServiceIntoDB(
       req.params?.id as string,
     );
+
     sendResponse(res, {
-      statusCode: 201,
+      statusCode: 200,
       success: true,
-      message: "Pets retrived Successfully.",
+      message: "Service retrieved successfully",
       data: result,
     });
   } catch (error: any) {
     sendResponse(res, {
-      statusCode: 201,
-      success: true,
-      message: error?.message || "Something went wrong!!",
+      statusCode: 500,
+      success: false,
+      message: error?.message || "Failed to retrieve service",
       data: null,
     });
   }
 };
 
 export const ServiceController = {
-  // Add controller methods here
   createService,
   getAllService,
-  getSingleSitter
+  getSingleService,
 };

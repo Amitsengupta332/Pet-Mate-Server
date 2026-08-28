@@ -2,9 +2,7 @@ import { prisma } from "../../lib/prisma";
 
 const createServiceIntoDB = async (payload: any, userId: string) => {
   const sitterProfile = await prisma.sitterProfiles.findUnique({
-    where: {
-      sitterId: userId,
-    },
+    where: { sitterId: userId },
   });
 
   if (!sitterProfile) {
@@ -18,33 +16,41 @@ const createServiceIntoDB = async (payload: any, userId: string) => {
   return result;
 };
 
-const getAllServiceIntoDB = async (userId: string) => {
-  const sitterProfile = await prisma.sitterProfiles.findUnique({
-    where: {
-      sitterId: userId,
-    },
-  });
-
-  if (!sitterProfile) {
-    throw new Error("Sitter Profile not found");
-  }
-
+const getAllServiceIntoDB = async () => {
   const result = await prisma.service.findMany({
-    where: {
-      sitterId: sitterProfile.id,
-    },
     include: {
-      sitter: true,
+      sitter: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+      },
     },
   });
 
   return result;
 };
 
-const getSingleServiceIntoDB = async (petId: string) => {
+const getSingleServiceIntoDB = async (serviceId: string) => {
   const result = await prisma.service.findUnique({
-    where: {
-      id: petId,
+    where: { id: serviceId },
+    include: {
+      sitter: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+      },
     },
   });
 
@@ -52,7 +58,6 @@ const getSingleServiceIntoDB = async (petId: string) => {
 };
 
 export const ServiceService = {
-  // Add service methods here
   createServiceIntoDB,
   getAllServiceIntoDB,
   getSingleServiceIntoDB,
