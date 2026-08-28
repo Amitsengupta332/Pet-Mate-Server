@@ -41,7 +41,28 @@ const loginUser = async (req: Request, res: Response) => {
   }
 };
 
+const getMe = async (req: Request, res: Response) => {
+  try {
+    const result = await AuthService.getMeFromDB(req.user?.id);
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "User profile retrieved successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 500,
+      success: false,
+      message: error?.message || "Failed to retrieve profile",
+      data: null,
+    });
+  }
+};
+
 export const AuthController = {
   createUser,
   loginUser,
+  getMe,
 };
