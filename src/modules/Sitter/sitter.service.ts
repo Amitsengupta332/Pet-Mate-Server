@@ -1,96 +1,79 @@
 import { BookingStatus } from "../../../generated/prisma";
 import { prisma } from "../../lib/prisma";
 
+// 1. Create Sitter Profile
 const createSitterIntoDB = async (payload: any, userId: string) => {
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) throw new Error("Invalid user");
+
+  const isExists = await prisma.sitterProfiles.findUnique({
+    where: { sitterId: userId },
   });
+  if (isExists) throw new Error("Sitter profile already exists");
 
-  if (!user) {
-    throw new Error("Invalid user");
-  }
-
-  const result = await prisma.sitterProfiles.create({
+  return await prisma.sitterProfiles.create({
     data: { ...payload, sitterId: user.id },
   });
-
-  return result;
 };
 
-const getAllSitterIntoDB = async (userId: string) => {
-  console.log(userId);
-
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
+// 2. Update Sitter Profile
+const updateSitterProfileIntoDB = async (payload: any, userId: string) => {
+  const profile = await prisma.sitterProfiles.findUnique({
+    where: { sitterId: userId },
   });
+  if (!profile) throw new Error("Sitter profile not found");
 
-  if (!user) {
-    throw new Error("Invalid user");
-  }
+  return await prisma.sitterProfiles.update({
+    where: { sitterId: userId },
+    data: payload,
+  });
+};
 
-  const result = await prisma.sitterProfiles.findUniqueOrThrow({
-    where: {
-      sitterId: user.id,
-    },
+// 3. Get All Sitters (Public with Filters)
+const getAllSittersFromDB = async () => {
+  return await prisma.sitterProfiles.findMany({
     include: {
-      user: true,
+      user: { select: { id: true, name: true, email: true } },
+      services: true,
+      reviews: true,
+    },
+    orderBy: { createdAt: "desc" },
+  });
+};
+
+// 4. Get Single Sitter by Profile ID (Public)
+const getSingleSitterFromDB = async (sitterProfileId: string) => {
+  const result = await prisma.sitterProfiles.findUnique({
+    where: { id: sitterProfileId },
+    include: {
+      user: { select: { id: true, name: true, email: true } },
+      services: true,
+      reviews: {
+        include: {
+          owner: { select: { id: true, name: true } },
+        },
+      },
     },
   });
-
+  if (!result) throw new Error("Sitter profile not found");
   return result;
 };
 
-const getSingleSitterIntoDB = async (petId: string) => {
-  const result = await prisma.pet.findUnique({
-    where: {
-      id: petId,
-    },
-  });
-
-  return result;
-};
-
-// const updateBookingStatusIntoDB = async (
-//   status: BookingStatus,
-//   bookingId: string,
-// ) => {
-//   const result = await prisma.booking.update({
-//     where: {
-//       id: bookingId,
-//     },
-//     data: {
-//       status: status,
-//     },
-//   });
-
-//   return result;
-// };
-
+// 5. Update Booking Status (Sitter Accept/Decline/Complete)
 const updateBookingStatusIntoDB = async (
   status: BookingStatus,
-  bookingId: string,
+  bookingId: string
 ) => {
-  const result = await prisma.booking.update({
-    where: {
-      id: bookingId,
-    },
-    data: {
-      status: status,
-    },
+  return await prisma.booking.update({
+    where: { id: bookingId },
+    data: { status },
   });
-
-  return result;
 };
 
 export const SitterService = {
-  // Add service methods here
-
   createSitterIntoDB,
-  getAllSitterIntoDB,
-  getSingleSitterIntoDB,
+  updateSitterProfileIntoDB,
+  getAllSittersFromDB,
+  getSingleSitterFromDB,
   updateBookingStatusIntoDB,
 };

@@ -46,9 +46,55 @@ const getSinglePetIntoDB = async (petId: string) => {
 };
 
 
+const updatePetIntoDB = async (
+  petId: string,
+  userId: string,
+  payload: Partial<{ name: string; breed: string; age: string; notes: string }>
+) => {
+  const pet = await prisma.pet.findUnique({
+    where: { id: petId },
+  });
+
+  if (!pet) {
+    throw new Error("Pet not found!");
+  }
+
+  if (pet.ownerId !== userId) {
+    throw new Error("You are not authorized to update this pet!");
+  }
+
+  const result = await prisma.pet.update({
+    where: { id: petId },
+    data: payload,
+  });
+
+  return result;
+};
+
+const deletePetFromDB = async (petId: string, userId: string) => {
+  const pet = await prisma.pet.findUnique({
+    where: { id: petId },
+  });
+
+  if (!pet) {
+    throw new Error("Pet not found!");
+  }
+
+  if (pet.ownerId !== userId) {
+    throw new Error("You are not authorized to delete this pet!");
+  }
+
+  const result = await prisma.pet.delete({
+    where: { id: petId },
+  });
+
+  return result;
+};
+
 export const PetService = {
-  // Add service methods here
- createPetIntoDB,
- getAllPetIntoDB,
- getSinglePetIntoDB
+  createPetIntoDB,
+  getAllPetIntoDB,
+  getSinglePetIntoDB,
+  updatePetIntoDB,
+  deletePetFromDB,
 };

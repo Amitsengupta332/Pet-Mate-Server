@@ -61,8 +61,30 @@ const getMe = async (req: Request, res: Response) => {
   }
 };
 
+const updateMe = async (req: Request, res: Response) => {
+  try {
+    const result = await AuthService.updateMeIntoDB(req.user?.id, req.body);
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Profile updated successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 400,
+      success: false,
+      message: error?.message || "Failed to update profile",
+      data: null,
+    });
+  }
+};
+
+// AuthController অবজেক্টে এক্সপোর্ট করুন:
 export const AuthController = {
   createUser,
   loginUser,
   getMe,
+  updateMe,
 };

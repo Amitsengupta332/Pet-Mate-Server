@@ -62,9 +62,57 @@ const getSinglePets = async (req: Request, res: Response) => {
   }
 };
 
+const updatePet = async (req: Request, res: Response) => {
+  try {
+    const result = await PetService.updatePetIntoDB(
+      req.params.id as string,
+      req.user?.id,
+      req.body
+    );
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Pet updated successfully!",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 400,
+      success: false,
+      message: error?.message || "Failed to update pet",
+      data: null,
+    });
+  }
+};
+
+const deletePet = async (req: Request, res: Response) => {
+  try {
+    const result = await PetService.deletePetFromDB(
+      req.params.id as string,
+      req.user?.id
+    );
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Pet deleted successfully!",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 400,
+      success: false,
+      message: error?.message || "Failed to delete pet",
+      data: null,
+    });
+  }
+};
+
 export const PetController = {
-  // Add controller methods here
   createPets,
   getAllPets,
-  getSinglePets
+  getSinglePets,
+  updatePet,
+  deletePet,
 };

@@ -6,7 +6,7 @@ const createService = async (req: Request, res: Response) => {
   try {
     const result = await ServiceService.createServiceIntoDB(
       req.body,
-      req.user?.id,
+      req.user?.id
     );
 
     sendResponse(res, {
@@ -47,7 +47,7 @@ const getAllService = async (req: Request, res: Response) => {
 const getSingleService = async (req: Request, res: Response) => {
   try {
     const result = await ServiceService.getSingleServiceIntoDB(
-      req.params?.id as string,
+      req.params?.id as string
     );
 
     sendResponse(res, {
@@ -66,8 +66,57 @@ const getSingleService = async (req: Request, res: Response) => {
   }
 };
 
+const updateService = async (req: Request, res: Response) => {
+  try {
+    const result = await ServiceService.updateServiceIntoDB(
+      req.params.id as string,
+      req.user?.id,
+      req.body
+    );
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Service updated successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 400,
+      success: false,
+      message: error?.message || "Failed to update service",
+      data: null,
+    });
+  }
+};
+
+const deleteService = async (req: Request, res: Response) => {
+  try {
+    const result = await ServiceService.deleteServiceFromDB(
+      req.params.id as string,
+      req.user?.id
+    );
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Service deleted successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 400,
+      success: false,
+      message: error?.message || "Failed to delete service",
+      data: null,
+    });
+  }
+};
+
 export const ServiceController = {
   createService,
   getAllService,
   getSingleService,
+  updateService,
+  deleteService,
 };

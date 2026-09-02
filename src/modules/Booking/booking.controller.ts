@@ -48,7 +48,56 @@ const getUserBookings = async (req: Request, res: Response) => {
   }
 };
 
+const getSingleBooking = async (req: Request, res: Response) => {
+  try {
+    const result = await BookingService.getSingleBookingFromDB(
+      req.params.id as string,
+      req.user?.id
+    );
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Booking retrieved successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 400,
+      success: false,
+      message: error?.message || "Failed to retrieve booking",
+      data: null,
+    });
+  }
+};
+
+const cancelBooking = async (req: Request, res: Response) => {
+  try {
+    const result = await BookingService.cancelBookingByOwnerInDB(
+      req.params.id as string,
+      req.user?.id
+    );
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Booking cancelled successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 400,
+      success: false,
+      message: error?.message || "Failed to cancel booking",
+      data: null,
+    });
+  }
+};
+
+// BookingController অবজেক্টে এক্সপোর্ট করুন:
 export const BookingController = {
   createService,
   getUserBookings,
+  getSingleBooking,
+  cancelBooking,
 };

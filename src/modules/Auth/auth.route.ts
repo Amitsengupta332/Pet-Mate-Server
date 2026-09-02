@@ -9,7 +9,13 @@ router.post("/login", AuthController.loginUser);
 router.get(
   "/me",
   auth(UserRole.admin, UserRole.owner, UserRole.sitter),
-  AuthController.getMe
+  AuthController.getMe,
+);
+
+router.patch(
+  "/me",
+  auth(UserRole.admin, UserRole.owner, UserRole.sitter),
+  AuthController.updateMe,
 );
 
 export const AuthRoutes = router;

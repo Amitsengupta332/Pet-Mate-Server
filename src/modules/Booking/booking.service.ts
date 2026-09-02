@@ -101,7 +101,41 @@ const getUserBookingsFromDB = async (userId: string, role: string) => {
   return result;
 };
 
+const getSingleBookingFromDB = async (bookingId: string, userId: string) => {
+  const booking = await prisma.booking.findUnique({
+    where: { id: bookingId },
+    include: {
+      pet: true,
+      service: true,
+      owner: { select: { id: true, name: true, email: true } },
+    },
+  });
+
+  if (!booking) throw new Error("Booking not found");
+  if (booking.ownerId !== userId && booking.sitterId !== userId) {
+    throw new Error("You are not authorized to view this booking");
+  }
+
+  return booking;
+};
+
+const cancelBookingByOwnerInDB = async (bookingId: string, userId: string) => {
+  const booking = await prisma.booking.findUnique({ where: { id: bookingId } });
+  if (!booking) throw new Error("Booking not found");
+  if (booking.ownerId !== userId) throw new Error("Unauthorized");
+  if (booking.status !== "PENDING") {
+    throw new Error("Only pending bookings can be cancelled");
+  }
+
+  return await prisma.booking.update({
+    where: { id: bookingId },
+    data: { status: "CANCELLED" },
+  });
+};
+
 export const BookingService = {
   createBookingIntoDB,
   getUserBookingsFromDB,
+  getSingleBookingFromDB,
+  cancelBookingByOwnerInDB,
 };

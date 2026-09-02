@@ -4,13 +4,13 @@ import { SitterController } from "./sitter.controller";
 
 const router = express.Router();
 
+// Public Routes
+router.get("/", SitterController.getAllSitters);
+router.get("/:id", SitterController.getSingleSitter);
+
+// Sitter Protected Routes
 router.post("/", auth(UserRole.sitter), SitterController.createSitter);
-router.get("/", auth(UserRole.sitter), SitterController.getAllSitter);
-router.get("/:id", auth(UserRole.owner));
-router.patch(
-  "/booking/:id",
-  auth(UserRole.sitter),
-  SitterController.updateBookingStatus,
-);
+router.put("/profile", auth(UserRole.sitter), SitterController.updateSitterProfile);
+router.patch("/booking/:id", auth(UserRole.sitter), SitterController.updateBookingStatus);
 
 export const SitterRoutes = router;
