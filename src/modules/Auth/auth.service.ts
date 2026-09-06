@@ -45,6 +45,29 @@ const loginUserIntoDB = async (payload: any) => {
   }
 };
 
+// const getMeFromDB = async (userId: string) => {
+//   const result = await prisma.user.findUnique({
+//     where: { id: userId },
+//     select: {
+//       id: true,
+//       name: true,
+//       email: true,
+//       role: true,
+//       status: true,
+//       createdAt: true,
+//       updatedAt: true,
+//       sitterProfile: true,
+//       pets: true,
+//     },
+//   });
+
+//   if (!result) {
+//     throw new Error("User profile not found");
+//   }
+
+//   return result;
+// };
+
 const getMeFromDB = async (userId: string) => {
   const result = await prisma.user.findUnique({
     where: { id: userId },
@@ -56,7 +79,11 @@ const getMeFromDB = async (userId: string) => {
       status: true,
       createdAt: true,
       updatedAt: true,
-      sitterProfile: true,
+      sitterProfile: {
+        include: {
+          services: true, // <-- এই লাইনটি যুক্ত করা হয়েছে
+        },
+      },
       pets: true,
     },
   });
