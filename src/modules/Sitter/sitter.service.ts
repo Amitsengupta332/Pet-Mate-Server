@@ -1,4 +1,5 @@
-import { BookingStatus } from "../../../generated/prisma";
+// import { BookingStatus } from "../../../generated/prisma";
+import { BookingStatus } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
 
 // 1. Create Sitter Profile

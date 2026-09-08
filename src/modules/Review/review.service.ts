@@ -1,10 +1,10 @@
 import { prisma } from "../../lib/prisma";
 
+// 1. Create Review
 const createReviewIntoDB = async (
   payload: { bookingId: string; rating: number; comment: string },
   ownerId: string
 ) => {
-  // 1. Check if booking exists and belongs to owner
   const booking = await prisma.booking.findUnique({
     where: { id: payload.bookingId },
   });
@@ -17,12 +17,10 @@ const createReviewIntoDB = async (
     throw new Error("You are not authorized to review this booking");
   }
 
-  // 2. Ensure booking is completed
   if (booking.status !== "COMPLETED") {
     throw new Error("You can only review completed bookings");
   }
 
-  // 3. Check if review already exists
   const existingReview = await prisma.review.findUnique({
     where: { bookingId: payload.bookingId },
   });
@@ -31,7 +29,6 @@ const createReviewIntoDB = async (
     throw new Error("You have already reviewed this booking");
   }
 
-  // 4. Get SitterProfile ID
   const sitterProfile = await prisma.sitterProfiles.findUnique({
     where: { sitterId: booking.sitterId },
   });
@@ -40,40 +37,74 @@ const createReviewIntoDB = async (
     throw new Error("Sitter profile not found");
   }
 
-  // 5. Create Review
-  const result = await prisma.review.create({
+  return await prisma.review.create({
     data: {
-      rating: payload.rating,
+      rating: Number(payload.rating),
       comment: payload.comment,
       bookingId: payload.bookingId,
       ownerId,
       sitterId: sitterProfile.id,
     },
     include: {
-      owner: {
-        select: { id: true, name: true, email: true },
-      },
+      owner: { select: { id: true, name: true, email: true } },
     },
   });
-
-  return result;
 };
 
+// 2. Update Review (নতুন)
+const updateReviewIntoDB = async (
+  reviewId: string,
+  ownerId: string,
+  payload: { rating?: number; comment?: string }
+) => {
+  const review = await prisma.review.findUnique({
+    where: { id: reviewId },
+  });
+
+  if (!review) throw new Error("Review not found");
+  if (review.ownerId !== ownerId) {
+    throw new Error("You are not authorized to update this review");
+  }
+
+  return await prisma.review.update({
+    where: { id: reviewId },
+    data: {
+      rating: payload.rating ? Number(payload.rating) : undefined,
+      comment: payload.comment,
+    },
+  });
+};
+
+// 3. Delete Review (নতুন)
+const deleteReviewFromDB = async (reviewId: string, ownerId: string) => {
+  const review = await prisma.review.findUnique({
+    where: { id: reviewId },
+  });
+
+  if (!review) throw new Error("Review not found");
+  if (review.ownerId !== ownerId) {
+    throw new Error("You are not authorized to delete this review");
+  }
+
+  return await prisma.review.delete({
+    where: { id: reviewId },
+  });
+};
+
+// 4. Get Sitter Reviews (Public)
 const getSitterReviewsFromDB = async (sitterProfileId: string) => {
-  const result = await prisma.review.findMany({
+  return await prisma.review.findMany({
     where: { sitterId: sitterProfileId },
     include: {
-      owner: {
-        select: { id: true, name: true },
-      },
+      owner: { select: { id: true, name: true } },
     },
     orderBy: { createdAt: "desc" },
   });
-
-  return result;
 };
 
 export const ReviewService = {
   createReviewIntoDB,
+  updateReviewIntoDB,
+  deleteReviewFromDB,
   getSitterReviewsFromDB,
 };

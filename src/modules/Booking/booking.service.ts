@@ -70,35 +70,50 @@ const createBookingIntoDB = async (
 };
 
 // নিজের বুকিং লিস্ট পাওয়ার মেথড
+// const getUserBookingsFromDB = async (userId: string, role: string) => {
+//   let whereCondition = {};
+
+//   // ওনার হলে নিজের তৈরি বুকিং এবং সিটার হলে তার কাজের বুকিং ফিল্টার হবে
+//   if (role === "OWNER") {
+//     whereCondition = { ownerId: userId };
+//   } else if (role === "SITTER") {
+//     whereCondition = { sitterId: userId };
+//   }
+
+//   const result = await prisma.booking.findMany({
+//     where: whereCondition,
+//     include: {
+//       pet: true,
+//       service: true,
+//       owner: {
+//         select: {
+//           id: true,
+//           name: true,
+//           email: true,
+//         },
+//       },
+//     },
+//     orderBy: {
+//       createdAt: "desc",
+//     },
+//   });
+
+//   return result;
+// };
 const getUserBookingsFromDB = async (userId: string, role: string) => {
-  let whereCondition = {};
+  const whereClause =
+    role === "OWNER" ? { ownerId: userId } : { sitterId: userId };
 
-  // ওনার হলে নিজের তৈরি বুকিং এবং সিটার হলে তার কাজের বুকিং ফিল্টার হবে
-  if (role === "OWNER") {
-    whereCondition = { ownerId: userId };
-  } else if (role === "SITTER") {
-    whereCondition = { sitterId: userId };
-  }
-
-  const result = await prisma.booking.findMany({
-    where: whereCondition,
+  return await prisma.booking.findMany({
+    where: whereClause,
     include: {
       pet: true,
       service: true,
-      owner: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
-        },
-      },
+      review: true,
+      owner: { select: { id: true, name: true, email: true } },
     },
-    orderBy: {
-      createdAt: "desc",
-    },
+    orderBy: { createdAt: "desc" },
   });
-
-  return result;
 };
 
 const getSingleBookingFromDB = async (bookingId: string, userId: string) => {
