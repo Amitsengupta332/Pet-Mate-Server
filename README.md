@@ -1,14 +1,31 @@
 # PetMate 🐾
 
-**"Loving Care for Your Furry Friends"**
+**"Loving Care for Your Furry Friends" - Full-Stack Pet Care Marketplace**
 
 ---
 
-## Project Overview
+## 🌐 Live Deployment & Resources
 
-PetMate is a full-stack web application connecting pet owners with trusted pet sitters. Owners can browse walker/sitter profiles, book services (walking, boarding, daycare), and track updates. Sitters can manage their services, set rates, and accept bookings. Admins oversee the platform and ensure trust and safety.
+- **Live Frontend Web App:** [https://petmate-frontend-self.vercel.app](https://petmate-frontend-self.vercel.app)
+- **Live Backend API Root:** [https://petmate-server-nine.vercel.app](https://petmate-server-nine.vercel.app)[cite: 9]
+- **Backend API Base URL:** [https://petmate-server-nine.vercel.app/api/v1](https://petmate-server-nine.vercel.app/api/v1)[cite: 9]
 
 ---
+
+## 🔑 Demo & Testing Credentials
+
+For evaluation and testing, use any of the pre-seeded accounts below. All accounts share the same password:
+
+> **Universal Password:** `password123`
+
+| Role           | Full Name      | Email Address                 | What You Can Test                                      |
+| :------------- | :------------- | :---------------------------- | :----------------------------------------------------- |
+| **Pet Sitter** | Sarah Jenkins  | `sarah.sitter@gmail.com`      | Walking, Boarding, Sitting services + Verified reviews |
+| **Pet Sitter** | Marcus Vance   | `marcus.walker@gmail.com`     | Walking, Daycare services + Confirmed bookings         |
+| **Pet Sitter** | David Miller   | `david.miller.dogs@gmail.com` | 1-acre property, Boarding & Daycare packages           |
+| **Pet Owner**  | Emily Watson   | `emily.watson@gmail.com`      | Pets: Luna (Bulldog), Cleo (Cat), book sitters         |
+| **Pet Owner**  | Tariq Mahmud   | `tariq.mahmud@yahoo.com`      | Pet: Rocky (German Shepherd), booking history          |
+| **Pet Owner**  | Jessica Taylor | `jessica.t@outlook.com`       | Pet: Cooper (Golden Retriever), active requests        |
 
 ## Roles & Permissions
 
